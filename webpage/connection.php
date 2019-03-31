@@ -62,9 +62,11 @@
   	             $_SESSION['success'] = "You are now logged in";
 
 			    //redirection to index.php page
-			    header('location: log_in.php');
+			    header('location: index.php');
 		}
    }  
+
+
 
 
       //LOGIN USER
@@ -72,14 +74,14 @@
       if(isset($_POST['login_user'])) {
 
       	$username = mysqli_real_escape_string($db,$_POST['username']);
-      	$password = mysqli_real_escape_string($db,$_POST['password']);
+      	$pwd = mysqli_real_escape_string($db, $_POST['pwd']);
 
 
       	if(empty($username)){
       		array_push($errors, "Username is required");
       	}
 
-      	if(empty($password)){
+      	if(empty($pwd)){
       		array_push($errors, "Password is required");
       	}
 
@@ -88,13 +90,13 @@
 
        	$password = md5($pwd);
 
-       	$query = "SELECT * FROM users WHERE username='$username' AND password='password'";
+       	$query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
        	$result = mysqli_query($db, $query);
 
        	if(mysqli_num_rows($result) == 1){
        		$_SESSION['username'] = $username;
        		$_SESSION['success'] = "You are now logged in";
-       		header('location: index.php');
+       		header('location: blog.php');
        	}else{
        		array_push($errors, "Wrong username or password combination");
        	}
