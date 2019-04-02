@@ -6,6 +6,8 @@
    $username = "";
    $email = "";
    $fullname = "";
+   $title = "";
+   $body = "";
    $errors = array();
 
      //connneting to database lab_blog
@@ -103,7 +105,44 @@
        }
 
       }
+
+      
+	 
+
+
+
+
+	 //posting posts 
+
+	  
+      
+         $get_post_query = "SELECT title, body,publish_date FROM posts";
+        $get_post = mysqli_query($db,$get_post_query);
+
+    if(isset($_POST['post_blog'])){
+
+    	$title = mysqli_real_escape_string($db, $_POST['title']);
+    	$body = mysqli_real_escape_string($db, $_POST['body']);
       
 
+    	if(empty($title)){array_push($errors, "Title is required");}
+    	if(empty($body)){array_push($errors, "Nothing in the body");}
 
+      if(count($errors) == 0){
+
+    	$post_insert = "INSERT INTO posts (title, body) VALUES('$title' , '$body' )";
+
+    	mysqli_query($db, $post_insert);
+
+      }
+
+    	header('location:blog.php');
+
+		 }
+
+
+ 
+     
+      
+    
  ?>
